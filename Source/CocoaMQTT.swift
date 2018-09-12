@@ -346,13 +346,13 @@ open class CocoaMQTT: NSObject, CocoaMQTTClient, CocoaMQTTFrameBufferProtocol {
         frame.dup = message.dup
 //        send(frame, tag: Int(msgid))
         _ = buffer.add(frame)
-        
-        
+
+
 
         if message.qos != CocoaMQTTQOS.qos0 {
-            
+
         }
-        
+
 
         delegate?.mqtt(self, didPublishMessage: message, id: msgid)
         didPublishMessage(self, message, msgid)
