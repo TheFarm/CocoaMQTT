@@ -14,5 +14,5 @@ Pod::Spec.new do |s|
   s.source   = { :git => "https://github.com/emqtt/CocoaMQTT.git", :tag => "1.1.2"}
   s.source_files = "Source/{*.h}", "Source/*.swift"
   s.dependency "CocoaAsyncSocket", "~> 7.6.3"
-  s.dependency "SwiftyTimer", :git => "https://github.com/thefarm/SwiftyTimer.git", :commit => "14b81a9"
+  s.dependency "SwiftyTimer", "~> 2.0.0"
 end
