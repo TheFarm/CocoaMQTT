@@ -441,6 +441,7 @@ open class CocoaMQTTFrameBuffer: NSObject {
     
     
     // return false means the frame is rejected because of the buffer is full
+    @discardableResult
     open func add(_ frame: CocoaMQTTFramePublish) -> Bool {
         guard !isBufferFull else {
             printDebug("Buffer is full, message(\(frame.msgid!)) was abandoned.")
@@ -487,11 +488,12 @@ open class CocoaMQTTFrameBuffer: NSObject {
     
     open func sendSuccess(withMsgid msgid: UInt16) {
         DispatchQueue.main.async { [weak self] in
-            _ = self?.removeFrameFromSilos(withMsgid: msgid)
+            self?.removeFrameFromSilos(withMsgid: msgid)
             printDebug("sendMessageSuccess:\(msgid)")
         }
     }
-    
+
+    @discardableResult
     func removeFrameFromSilos(withMsgid msgid: UInt16) -> Bool {
         var success = false
         for (index, item) in silos.enumerated() {
