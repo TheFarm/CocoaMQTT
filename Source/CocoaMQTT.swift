@@ -327,7 +327,7 @@ open class CocoaMQTT: NSObject, CocoaMQTTClient, CocoaMQTTFrameBufferProtocol {
     open func ping() {
         printDebug("ping")
         send(CocoaMQTTFrame(type: CocoaMQTTFrameType.pingreq), tag: -0xC0)
-        self.delegate?.mqttDidPing(self)
+        delegate?.mqttDidPing(self)
         didPing(self)
     }
 
@@ -344,16 +344,7 @@ open class CocoaMQTT: NSObject, CocoaMQTTClient, CocoaMQTTFrameBufferProtocol {
         frame.qos = message.qos.rawValue
         frame.retained = message.retained
         frame.dup = message.dup
-//        send(frame, tag: Int(msgid))
-        _ = buffer.add(frame)
-
-
-
-        if message.qos != CocoaMQTTQOS.qos0 {
-
-        }
-
-
+        buffer.add(frame)
         delegate?.mqtt(self, didPublishMessage: message, id: msgid)
         didPublishMessage(self, message, msgid)
         return msgid
@@ -408,7 +399,7 @@ extension CocoaMQTT: GCDAsyncSocketDelegate {
     public func socket(_ sock: GCDAsyncSocket, didReceive trust: SecTrust, completionHandler: @escaping (Bool) -> Swift.Void) {
         printDebug("didReceiveTrust")
         
-        delegate?.mqtt!(self, didReceive: trust, completionHandler: completionHandler)
+        delegate?.mqtt?(self, didReceive: trust, completionHandler: completionHandler)
         didReceiveTrust(self, trust)
     }
 
