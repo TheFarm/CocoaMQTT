@@ -132,13 +132,12 @@ class CocoaMQTTTests: XCTestCase, CocoaMQTTDelegate {
         }
     }
     
-    func mqtt(_ mqtt: CocoaMQTT, didSubscribeTopic topic: String) {
-        if topic == topicToSub {
+    func mqtt(_ mqtt: CocoaMQTT, didSubscribeTopic topics: [String]) {
+        if topics.first! == topicToSub {
             subExp?.fulfill()
         } else {
             XCTFail()
         }
-        
     }
     
     func mqtt(_ mqtt: CocoaMQTT, didUnsubscribeTopic topic: String) {
@@ -161,11 +160,12 @@ class CocoaMQTTTests: XCTestCase, CocoaMQTTDelegate {
 // tools
 
 private func randomCode(length: Int) -> String {
-    let base62chars = [Character]("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".characters)
+    let base62chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
     var code = ""
     for _ in 0..<length {
         let random = Int(arc4random_uniform(62))
-        code.append(base62chars[random])
+        let index = base62chars.index(base62chars.startIndex, offsetBy: random)
+        code.append(base62chars[index])
     }
     return code
 }
